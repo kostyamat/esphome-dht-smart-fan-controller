@@ -2,7 +2,8 @@
 
 [🇺🇦 Українська версія](#esphome-розумний-контролер-вентилятора)
 
-![](docs/WEB-interface.png)  ![](docs/HA-intrface.png) 
+![](docs/WEB-interface.png)  
+![](docs/HA-intrface.png) 
 
 A smart temperature-based fan controller built with ESPHome for ESP8266/ESP32 boards. Features automatic speed control based on temperature readings and manual override capabilities.
 
