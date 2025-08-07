@@ -101,7 +101,7 @@ globals:
 output:
   - platform: slow_pwm
     id: fan_pwm_output
-    pin: D3
+    pin: D7
     period: 500ms
     inverted: true
 
