@@ -17,14 +17,14 @@ A smart temperature-based fan controller built with ESPHome for ESP8266/ESP32 bo
 ## Hardware Requirements
 
 - ESP8266 board (tested on Wemos D1 Mini)
-- DHT22/DHT11 temperature sensor
+- DHT22/DHT11 or DS18B20 temperature sensor
 - Solid State Relay (SSR) for AC motor control
 - Standard AC room/ceiling fan (NO PWM support needed)
 - Power supply for ESP8266
 
 ## Pin Configuration
 
-- **D5**: DHT sensor data pin
+- **D5**: DHT/DS18B20 sensor data pin
 - **D7**: Control signal for Solid State Relay (inverted signal)
 
 ## Important Hardware Notes
@@ -101,10 +101,10 @@ For your specific fan, you may need to adjust this value in the YAML configurati
 
 1. Clone this repository
 2. Copy `secrets.yaml.example` to `secrets.yaml` and fill in your credentials
-3. Adjust the configuration in `dht.yaml` if needed
+3. Adjust the configuration in `XXX-autofan.yaml` if needed
 4. Flash to your ESP8266:
    ```bash
-   esphome run dht.yaml
+   esphome run XXX-autofan.yaml
    ```
 
 ## Web Interface
@@ -153,14 +153,14 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 ## Апаратні вимоги
 
 - Плата ESP8266 (протестовано на Wemos D1 Mini)
-- Датчик температури DHT22/DHT11
+- Датчик температури DHT22/DHT11, або DS18B20
 - Твердотільне реле (SSR) для керування двигуном змінного струму
 - Стандартний кімнатний/стельовий вентилятор змінного струму (НЕ потребує підтримки PWM)
 - Блок живлення для ESP8266
 
 ## Конфігурація пінів
 
-- **D5**: Пін даних датчика DHT
+- **D5**: Пін даних датчика DHT чи DS18B20
 - **D7**: Сигнал керування для твердотільного реле (інвертований сигнал)
 
 ## Важливі примітки щодо обладнання
@@ -217,3 +217,34 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 - Занадто короткі періоди можуть спричинити дратівливий акустичний шум або вібрацію двигуна
 
 Для вашого конкретного вентилятора може знадобитися налаштувати це значення в YAML конфігурації та протестувати різні значення між 1000мс та 5000мс. Починайте з довших періодів і поступово зменшуйте, поки не знайдете оптимальний баланс між плавною роботою та хорошим контролем швидкості.
+
+## Встановлення
+1. Клонуйте цей репозиторій
+2. Скопіюйте `secrets.yaml.example` в `secrets.yaml` та заповніть ваші дані
+3. Налаштуйте конфігурацію в `XXX-autofan.yaml` за потреби
+4. Прошийте на ваш ESP8266:
+   ```bash
+   esphome run XXX-autofan.yaml
+   ```
+
+## Веб-інтерфейс
+Доступ до вбудованого веб-інтерфейсу за адресою `http://<ip-пристрою>` (дані для входу за замовчуванням: admin/12345678)
+
+Інтерфейс організований у три секції:
+- **Climate**: Показники температури та вологості
+- **Fan Control**: Керування увімкнення/вимкнення, регулювання швидкості та вибір режиму
+- **Settings Auto Mode**: Параметри конфігурації для автоматичного режиму
+
+## Інтеграція з Home Assistant
+Пристрій автоматично з'явиться в Home Assistant, якщо у вас встановлена інтеграція ESPHome. Всі елементи керування та сенсори будуть доступні як сутності.
+
+## Примітки з безпеки
+- Автоматичний режим ніколи не вимкне вентилятор повністю - це може зробити тільки користувач
+- Всі налаштування перевіряються для запобігання пошкодженням
+- Частота PWM встановлена консервативно для роботи з більшістю вентиляторів
+
+## Ліцензія
+Цей проект ліцензований під ліцензією MIT - дивіться файл LICENSE для деталей.
+
+## Внесок у проект
+Pull request'и вітаються. Для значних змін, будь ласка, спочатку відкрийте issue для обговорення того, що ви хотіли б змінити.
