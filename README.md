@@ -37,6 +37,35 @@ This controller uses **slow PWM** technique to control standard AC fans that do 
 
 **For full speed range**: Set your fan's mechanical speed switch to maximum position. The controller will then have full range control from 0-100%.
 
+## PWM Configuration for Small Fans
+
+### Software PWM Configuration for Fan Control
+
+For small fans with relatively powerful motors, slow PWM can be ineffective and may cause uneven acceleration and deceleration of the propeller. In such cases, use software PWM with frequency ranging from several dozen to one and a half hundred hertz.
+
+**Step 1: Replace the output section**
+
+Replace the `output:` section in your code with the software PWM variant, configure the frequency and reinstall the project to the controller:
+
+```yaml
+# Software PWM output configuration for fan control
+output:
+  - platform: esp8266_pwm
+    id: fan_pwm_output
+    pin: D7
+    frequency: 33 Hz
+    inverted: true
+```
+
+**Step 2: Frequency recommendations**
+- Use frequency range 30-150 Hz for stable operation
+- Avoid frequencies that are multiples of 1/2 mains frequency (25Hz, 50Hz for 50Hz mains)
+- Optimal frequencies: 33Hz or 67Hz
+
+**⚠️ Why avoid frequencies that are multiples of 1/2 mains frequency:**
+- Motor may synchronize with mains frequency → jerky and uneven rotation
+- Acoustic beating occurs (frequency difference) → unpleasant low-frequency hum
+
 ## How It Works
 
 ### Operating Modes
@@ -172,6 +201,35 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Цей контролер використовує техніку **повільного PWM** для керування стандартними вентиляторами змінного струму, які не мають вбудованого регулювання швидкості. Твердотільне реле швидко вмикає/вимикає живлення змінного струму для досягнення контролю швидкості.
 
 **Для повного діапазону швидкостей**: Встановіть механічний перемикач швидкості вашого вентилятора в положення максимальної швидкості. Контролер матиме повний діапазон керування від 0 до 100%.
+
+## Налаштування ШІМ для малих вентиляторів
+
+### Налаштування програмного ШІМ для вентилятора
+
+На малих вентиляторах з відносно потужним мотором повільний ШІМ може бути неефективним і може призводити до нерівномірного розгону та гальмування гвинта. В такому випадку використовуйте програмний ШІМ з частотою від кількох десятків до півтори сотні герц.
+
+**Крок 1: Замініть секцію output**
+
+Замініть в коді секцію `output:` на варіант з програмним ШІМ, налаштуйте частоту та перевстановіть проект в контролер:
+
+```yaml
+# Налаштування програмного ШІМ для управління вентилятором
+output:
+  - platform: esp8266_pwm
+    id: fan_pwm_output
+    pin: D7
+    frequency: 33 Hz
+    inverted: true
+```
+
+**Крок 2: Рекомендації по частоті**
+- Використовувати частоту 30-150 Гц для стабільної роботи
+- Уникати частот, кратних 1/2 частоти мережі (25Гц, 50Гц для мережі 50Гц)
+- Оптимальна частота: 33Гц або 67Гц
+
+**⚠️ Чому уникати частоти кратної 1/2 частоти мережі:**
+- Мотор може "зачіплятися" за мережеву частоту → ривки та нерівномірне обертання
+- Виникають акустичні биття (різниця частот) → неприємний низькочастотний гул
 
 ## Як це працює
 
